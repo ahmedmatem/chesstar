@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Chesstar</string>
+    <string name="btn_play">Play</string>
+
+    <string name="preference_file_key">preferenceFileKey</string>
+    <string name="name_preference_default_key">Anonymous</string>
+
+    <string name="welcome_message">Welcome %1$s</string>
+    <string name="prompt_name">Your name</string>
+    <string name="btn_next">Next</string>
+</resources>
