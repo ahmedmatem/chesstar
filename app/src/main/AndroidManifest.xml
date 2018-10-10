@@ -11,13 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".services.FirebaseInstanceTokenService"
+        <service
+            android:name=".services.FirebaseInstanceTokenService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <service android:name=".services.MessagingService"
+        <service
+            android:name=".services.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
@@ -26,12 +28,16 @@
 
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".WelcomeActivity"
+        <activity
+            android:name=".WelcomeActivity"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".GameBoardActivity">
         </activity>
     </application>
 

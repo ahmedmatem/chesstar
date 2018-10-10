@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="drawable_pieces">
+        // white pieces
+        <item>@drawable/rook_w</item>
+        <item>@drawable/knight_w</item>
+        <item>@drawable/bishop_w</item>
+        <item>@drawable/queen_w</item>
+        <item>@drawable/king_w</item>
+        <item>@drawable/pawn_w</item>
+
+        // black pieces
+        <item>@drawable/rook_b</item>
+        <item>@drawable/knight_b</item>
+        <item>@drawable/bishop_b</item>
+        <item>@drawable/queen_b</item>
+        <item>@drawable/king_b</item>
+        <item>@drawable/pawn_b</item>
+    </integer-array>
+</resources>

@@ -1,17 +1,18 @@
 package com.ahmedmatem.android.chesstar.services;
 
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.ahmedmatem.android.chesstar.config.Constants;
 import com.ahmedmatem.android.chesstar.models.Player;
+import com.ahmedmatem.chess.util.Alliance;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
+
+import static com.ahmedmatem.android.chesstar.config.Constants.OPPONENT_EXTRA;
 
 public class MessagingService extends FirebaseMessagingService {
     private static final String TAG = "MessagingService";
@@ -28,7 +29,8 @@ public class MessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             Map<String,String> data = remoteMessage.getData();
-            sendMessage(data.get("name"));
+            Player player = new Player(data.get("name"), data.get("token"), Alliance.BLACK);
+            sendMessage(player);
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
@@ -49,10 +51,10 @@ public class MessagingService extends FirebaseMessagingService {
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private void sendMessage(String name) {
-        Log.d(TAG, "Broadcasting messaging");
-        Intent intent = new Intent(Constants.XXX_ACTION);
-        intent.putExtra("message", "Hello from " + name + "!");
+    private void sendMessage(Player player) {
+//        Log.d(TAG, "Broadcasting messaging");
+        Intent intent = new Intent(Constants.NEW_GAME_ACTION);
+        intent.putExtra(OPPONENT_EXTRA, player);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
