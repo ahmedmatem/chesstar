@@ -23,6 +23,11 @@ public class TileAdapter extends BaseAdapter {
         this.tiles = tiles;
     }
 
+    public void setTiles(Map<Integer, Tile> tiles) {
+        this.tiles = tiles;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return tiles.size();
@@ -45,33 +50,40 @@ public class TileAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.board_tile, parent, false);
-
-            tileViewHolder = new TileViewHolder();
-            tileViewHolder.content = (ImageView) convertView.findViewById(R.id.tile_content);
-
+            tileViewHolder = new TileViewHolder(convertView);
             convertView.setTag(tileViewHolder);
         } else {
             tileViewHolder = (TileViewHolder) convertView.getTag();
         }
 
         tileViewHolder.content.getLayoutParams().height = parent.getHeight() / 8;
-        int drawablePieceIndex = getDrawablePieceIndex(position);
 
-        TypedArray drawablePieceArray =
-                context.getResources().obtainTypedArray(R.array.drawable_pieces);
-        if(drawablePieceIndex != -1) {
+        Tile tile = tiles.get(position);
+        if (tile.isOccupied()) {
+            int drawablePieceIndex = getDrawablePieceIndex(tile);
+            TypedArray drawablePieceArray =
+                    context.getResources().obtainTypedArray(R.array.drawable_pieces);
             tileViewHolder.content.setImageResource(
                     drawablePieceArray.getResourceId(drawablePieceIndex, -1));
+        } else {
+            tileViewHolder.content.setVisibility(View.INVISIBLE);
+        }
+
+        // set selected and possible destination tiles background
+        if (tile.isSelected) {
+            convertView.setBackground(convertView.getResources()
+                    .getDrawable(R.drawable.selected_tile_bg));
+        } else if (tile.isPossibleDestination) {
+            convertView.setBackground(convertView.getResources()
+                    .getDrawable(R.drawable.possible_destination_bg));
+        } else {
+            convertView.setBackground(null);
         }
 
         return convertView;
     }
 
-    private int getDrawablePieceIndex(int position) {
-        Tile tile = tiles.get(position);
-        if(!tile.isOccupied()){
-            return -1;
-        }
+    private int getDrawablePieceIndex(Tile tile) {
         Piece piece = tile.getPiece();
         switch (piece.getCode()) {
             case ROOK_WHITE:
@@ -99,11 +111,15 @@ public class TileAdapter extends BaseAdapter {
             case PAWN_BLACK:
                 return 11;
             default:
-                return -1;
+                return -12;
         }
     }
 
     static class TileViewHolder{
         ImageView content;
+
+        public TileViewHolder(View view) {
+            content = view.findViewById(R.id.tile_content);
+        }
     }
 }

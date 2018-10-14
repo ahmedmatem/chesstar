@@ -9,7 +9,14 @@ public class Constants {
 
     // extras
     public static final String OPPONENT_EXTRA = "Opponent";
+    public static final String SOURCE_EXTRA = "Source";
+    public static final String DESTINATION_EXTRA = "Destination";
 
     // actions
-    public static final String NEW_GAME_ACTION = APP_PACKAGE + ".NEW_GAME_ACTION";
+    public static final String PLAYER_ACTION = APP_PACKAGE + ".PLAYER_ACTION";
+    public static final String MOVE_ACTION = APP_PACKAGE + ".MOVE_ACTION";
+
+    // http response contents
+    public static final String RESPONSE_CONTENT_PLAYER = "player";
+    public static final String RESPONSE_CONTENT_MOVE = "move";
 }

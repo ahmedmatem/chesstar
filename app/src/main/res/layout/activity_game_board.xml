@@ -8,7 +8,7 @@
     tools:context=".GameBoardActivity">
 
     <TextView
-        android:id="@+id/opponent_name"
+        android:id="@+id/player2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -29,10 +29,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponent_name"/>
+        app:layout_constraintTop_toBottomOf="@+id/player2"/>
 
     <TextView
-        android:id="@+id/me"
+        android:id="@+id/player1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

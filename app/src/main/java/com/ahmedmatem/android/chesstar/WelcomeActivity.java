@@ -7,13 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.ahmedmatem.android.chesstar.asyncs.FirebaseInstanceIdAsync;
 import com.ahmedmatem.android.chesstar.contracts.State;
 import com.ahmedmatem.android.chesstar.models.Player;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity
+        implements FirebaseInstanceIdAsync.FirebaseTokenListener {
 
     private FirebaseDatabase mDatabase;
     private Preferences mPref;
@@ -25,12 +27,11 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        final Intent intent = new Intent(this, MainActivity.class);
-
         mPref = new Preferences(getApplicationContext());
         // check if 'name' already created
         if(!mPref.getName().equals(
                 getString(R.string.name_preference_default_key))){
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -42,22 +43,26 @@ public class WelcomeActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = mName.getText().toString();
-                if (name.isEmpty()) {
-                    name = getString(R.string.name_preference_default_key);
-                }
-                String token = FirebaseInstanceId.getInstance().getToken();
-
-                mPref.setName(name);
-                mPref.setToken(token);
-
-                Player me = new Player(name, token, State.Default.toString());
-                upload(me);
-
-                startActivity(intent);
-                finish();
+                new FirebaseInstanceIdAsync(WelcomeActivity.this).execute();
             }
         });
+    }
+
+    @Override
+    public void onTokenReceived(String token) {
+        String name = mName.getText().toString();
+        if (name.isEmpty()) {
+            name = getString(R.string.name_preference_default_key);
+        }
+        mPref.setName(name);
+        mPref.setToken(token);
+
+        Player me = new Player(name, token, State.Default.toString());
+        upload(me);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void upload(Player player) {
