@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mWelcomeMessage = findViewById(R.id.welcome_message);
         mWelcomeMessage.setText(String.format(getString(R.string.welcome_message),
                 mPreference.getName()));
-        mPlayButton = (Button) findViewById(R.id.btn_play);
+        mPlayButton = findViewById(R.id.btn_play);
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
