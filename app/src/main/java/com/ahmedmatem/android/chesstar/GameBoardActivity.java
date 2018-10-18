@@ -41,8 +41,8 @@ public class GameBoardActivity extends AppCompatActivity implements AdapterView.
 
     private Preferences mPreference;
 
-    private Player player1; // belongs to white alliance
-    private Player player2; // belongs to black alliance
+    private Player player1;
+    private Player player2;
 
     private Tile sourceTile;
     private List<Tile> destinationTiles;
