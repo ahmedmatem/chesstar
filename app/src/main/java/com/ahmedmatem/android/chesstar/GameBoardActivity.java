@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ahmedmatem.android.chesstar.adapters.TileAdapter;
 import com.ahmedmatem.android.chesstar.config.Constants;
@@ -31,7 +32,9 @@ import static com.ahmedmatem.android.chesstar.config.Constants.RESPONSE_CONTENT_
 import static com.ahmedmatem.android.chesstar.config.Constants.OPPONENT_EXTRA;
 import static com.ahmedmatem.android.chesstar.config.Constants.SOURCE_EXTRA;
 
-public class GameBoardActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class GameBoardActivity extends AppCompatActivity implements
+        AdapterView.OnItemClickListener,
+        Board.BoardListener {
 
     private static final Board board = new Board();
 
@@ -56,6 +59,8 @@ public class GameBoardActivity extends AppCompatActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
+
+        board.setListener(this);
 
         mFunctions = FirebaseFunctions.getInstance();
 
@@ -210,5 +215,10 @@ public class GameBoardActivity extends AppCompatActivity implements AdapterView.
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMoveMessageReceiver, new IntentFilter(Constants.MOVE_ACTION));
         super.onResume();
+    }
+
+    @Override
+    public void onCheck() {
+        Toast.makeText(this, "CHECK", Toast.LENGTH_SHORT).show();
     }
 }
